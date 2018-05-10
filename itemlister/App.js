@@ -20,7 +20,7 @@ const firebaseConfig = {
     authDomain: "awesomeproject-53a9a.firebaseapp.com",
     databaseURL: "https://awesomeproject-53a9a.firebaseio.com",
     projectId: "awesomeproject-53a9a",
-    storageBucket: "awesomeproject-53a9a.appspot.com",  
+    storageBucket: "awesomeproject-53a9a.appspot.com",
 }
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -35,8 +35,8 @@ export default class App extends Component {
 
     this.itemsRef = this.getRef().child('items');
 
-    this.renderRow = this.renderRow.bind(this);
-    this.renderRow = this.pressRow.bind(this);
+    // this.renderRow = this.renderRow.bind(this);
+    // this.renderRow = this.pressRow.bind(this);
   }
 
   getRef(){
@@ -44,7 +44,7 @@ export default class App extends Component {
   }
 
   componentWillMount(){
-    this.getItems(this.itemsRef);
+    //this.getItems(this.itemsRef);
   }
 
   componentDidMount(){
@@ -54,32 +54,44 @@ export default class App extends Component {
   getItems(itemsRef){
     //let items = [{title:'Item One'},{title:'Item Two'}];
     itemsRef.on('value',(snap) => {
+      
       let items = [];
+
       snap.forEach((child) => {
-        items.push({
-          title: child.val().title,
-          _key: child.key
-        });
+        items.push(
+          
+          child.val().title,
+          
+        );
       });
+
+      console.log('items',items);
+
       this.setState({
         itemDataSource: this.state.itemDataSource.cloneWithRows(items)
       });
     });
   }
 
-  pressRow(item){
-    console.log(item);
+  pressRow = (index) => {
+    console.log(index);
   }
 
-  renderRow(item){
+  renderRow(item,index){
     return (
+      <View>
       <TouchableHighlight onPress={() => {
-        this.pressRow(item);
+        // this.pressRow(index);
+        console.log(index);
+
       }}>
-      <View style={style.li}>
-        <Text style={styles.liText}>{item.title}</Text>
+      <View  >
+        <Text style={styles.liText2}>
+        {item}
+        </Text>
       </View>
       </TouchableHighlight>
+      </View>
     );
   }
 
@@ -90,12 +102,12 @@ export default class App extends Component {
           <Toolbar title="ItemLister"/>
 
           <ListView
-          dataSource={this.state.itemDataSource}
-          renderRow={this.renderRow}
+            dataSource={this.state.itemDataSource}
+            renderRow={this.renderRow}          
           />
 
         <Text>
-          Welcome to React Native!
+          Happy Coding!
         </Text>
         
         
@@ -103,4 +115,3 @@ export default class App extends Component {
     );
   }
 }
-

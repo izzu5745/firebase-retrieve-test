@@ -40,6 +40,11 @@ export default StyleSheet.create({
     color: '#333',
     fontSize: 16,
   },
+  liText2: {
+    color: 'red',
+    fontSize: 20,
+    textAlign: 'center',
+  },
   navbar: {
     alignItems: 'center',
     backgroundColor: '#fff',
